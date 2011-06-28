@@ -24,7 +24,7 @@ class RandomTest extends JUnitSuite{
 	@Test def getInt {
 		val random = new Random()
 		
-		val numbers = for (i <- 1 to 1000) yield random.nextInt(100)
+		val numbers = for (i <- 1 to 1000000) yield random.nextInt(100)
 		val counts = numbers.groupBy(identity).map{case (k,v) => (k,v.size)}
 		
 		assert(counts.size === 100)
