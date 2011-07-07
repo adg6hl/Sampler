@@ -16,8 +16,10 @@
 
 package gc.sampler.random
 
+import scala.Math.random
+
 class Random{
-	def nextInt(max: Int): Int = {
-		3
+	def nextInt(numItems: Int): Int = {
+		(random * numItems).asInstanceOf[Int]
 	}
 }

@@ -29,7 +29,7 @@ class RandomTest extends JUnitSuite{
 		
 		assert(counts.size === 100)
 		counts.foreach{
-			case (k,v) => assertTrue("int "+k+" encountered fewer than 10 times",+v >= 10)
+			case (k,v) => assertTrue("int "+k+" encountered fewer than 10 times",+v >= 10) 
 		}
 	}
 }
