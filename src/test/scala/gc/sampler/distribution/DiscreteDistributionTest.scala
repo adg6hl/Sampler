@@ -18,6 +18,7 @@ package gc.sampler.distribution
 import org.scalatest.junit.JUnitSuite
 import org.scalatest.mock.MockitoSugar
 import org.junit.Test
+import org.junit.Assert.{assertTrue, assertFalse}
 import scala.math.{abs, max}
 
 class DiscreteDistributionTest extends JUnitSuite with MockitoSugar{
@@ -41,5 +42,26 @@ class DiscreteDistributionTest extends JUnitSuite with MockitoSugar{
 		val expected = math.abs(1/norm1 - 3/norm2)
 		
 		assert( expected === result )
+	}
+	
+	@Test def equalsAndHashCode {
+		val d1a = new DiscreteDistribution(Map(4->once, 5->twice))
+		val d1b = new DiscreteDistribution(Map(4->once, 5->twice))
+		val d2 = new DiscreteDistribution(Map(4->once))
+		
+		assertTrue(d1a.canEqual(d2))
+		assertFalse(d1a.canEqual(3))
+		
+		assert(d1a === d1b)
+		assertTrue(d1a != d2)
+		
+		assert(d1a.hashCode === d1b.hashCode)
+		assertTrue(d1a != d2)
+	}
+	
+	@Test def factoryConstruction {
+		val seq = Seq(1,2,2,3,3,3,4,4,4,4)
+		val d = DiscreteDistribution(seq)
+		assert(d === new DiscreteDistribution(Map(1->1, 2->2, 3->3, 4->4)))
 	}
 }

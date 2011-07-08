@@ -14,24 +14,14 @@
 * If not, see <http://www.gnu.org/licenses/>.
 */
 
-package gc.sampler.distribution
+package gc.sampler.run
 
-class DiscreteDistribution(val values: Map[Int,Int]) {
-	def distanceTo(that: DiscreteDistribution): Double = {
-		0.0
+import gc.sampler.random.Random
+import gc.sampler.distribution.DiscreteDistribution
+import scala.collection.mutable.MapBuilder
+
+class SerialRunner(val random: Random) {
+	def apply(numRuns: Int)(generator: => Int): DiscreteDistribution = {
+		null
 	}
-	
-	def canEqual(other: Any): Boolean = other.isInstanceOf[DiscreteDistribution]
-	
-	override def equals(other: Any) = other match {
-		case that: DiscreteDistribution => 
-			(that canEqual this) && (that.values equals values)
-		case _ => false
-	}
-	
-	override def hashCode() = values.hashCode	 
-}
-object DiscreteDistribution{
-	def apply(t:Traversable[Int]): DiscreteDistribution = 
-		new DiscreteDistribution(t.groupBy(identity).mapValues(_.size))
 }
