@@ -16,7 +16,7 @@
 
 package gc.sampler.random
 
-import scala.Math.random
+import scala.math.random
 
 class Random{
 	def nextInt(numItems: Int): Int = {
