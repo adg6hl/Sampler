@@ -40,6 +40,8 @@ class SerialRunnerTest extends JUnitSuite with MockitoSugar{
 			model.nextNumPositives(sample, popSize, positives)
 		}
 		
-		assert( result === new DiscreteDistribution(Map(1->1, 2->2, 3->3, 4->4)) )
+		assert( 
+			result === new DiscreteDistribution(Map(1->1, 2->2, 3->3, 4->4))
+		)
 	}
 }
