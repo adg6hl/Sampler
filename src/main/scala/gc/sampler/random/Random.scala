@@ -21,3 +21,5 @@ class Random{
 		3
 	}
 }
+
+// (scala.Math.random*8).asInstanceOf[Int]
