@@ -19,8 +19,9 @@ package gc.sampler.model
 import gc.sampler.random._
 
 class SingleSample(val random: Random) {
-		
 	def nextNumPositives(sampleSize:Int, populationSize:Int, numInfected:Int): Int = {
-		0
+		val draws = for(i <- 0 until sampleSize) yield random.nextInt(populationSize-i)
+		(0 /: draws){ (acc,n) => if(n < numInfected-acc) acc+1 else acc }
+		draws.foldLeft(0){ (acc,n) => if(n < numInfected-acc) acc+1 else acc }
 	}
 }
