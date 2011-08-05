@@ -14,22 +14,34 @@
 * If not, see <http://www.gnu.org/licenses/>.
 */
 
-package gc.sampler.random
+package gc.sampler.run
 
 import org.junit.Test
 import org.scalatest.junit.JUnitSuite
-import org.junit.Assert.assertTrue
+import org.scalatest.mock.MockitoSugar
+import org.mockito.Mockito.when
+import gc.sampler.random.Random
+import gc.sampler.model.SingleSample
+import gc.sampler.distribution.DiscreteDistribution
 
-class RandomTest extends JUnitSuite{
-	@Test def getInt {
-		val random = new Random()
+class SerialRunnerTest extends JUnitSuite with MockitoSugar{
+	@Test def createDist {
+		val runner = new SerialRunner(mock[Random])
 		
-		val numbers = for (i <- 1 to 1000000) yield random.nextInt(100)
-		val counts = numbers.groupBy(identity).map{case (k,v) => (k,v.size)}
+		val model = mock[SingleSample]
+		val sample = 2;
+		val popSize = 3;
+		val positives = 4;
+		when(model.nextNumPositives(sample, popSize, positives)).thenReturn(
+			1,2,2,3,3,3,4,4,4,4
+		)
 		
-		assert(counts.size === 100)
-		counts.foreach{
-			case (k,v) => assertTrue("int "+k+" encountered fewer than 10 times",+v >= 10) 
+		val result: DiscreteDistribution = runner(10){
+			model.nextNumPositives(sample, popSize, positives)
 		}
+		
+		assert( 
+			result === new DiscreteDistribution(Map(1->1, 2->2, 3->3, 4->4))
+		)
 	}
 }

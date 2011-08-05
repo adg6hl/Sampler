@@ -14,14 +14,18 @@
 * If not, see <http://www.gnu.org/licenses/>.
 */
 
-package gc.sampler.random
+package gc.sampler.run
 
-import scala.math.random
+import org.specs2.mock._
+import org.specs2.mutable._
+import org.specs2.matcher._
+import org.specs2.execute.Pending
 
-class Random{
-	def nextInt(numItems: Int): Int = {
-		(random * numItems).asInstanceOf[Int]
+class ParallelRunnerSpec extends SpecificationWithJUnit{
+	"ParallelRunner" should {
+		"do something" in { 
+			Pending("not written yet")
+		}
 	}
-}
 
-// (scala.Math.random*8).asInstanceOf[Int]
+}

@@ -16,8 +16,22 @@
 
 package gc.sampler.distribution
 
-class DiscreteDistribution(values: Map[Int,Int]) {
+class DiscreteDistribution(val values: Map[Int,Int]) {
 	def distanceTo(that: DiscreteDistribution): Double = {
 		0.0
 	}
+	
+	def canEqual(other: Any): Boolean = other.isInstanceOf[DiscreteDistribution]
+	
+	override def equals(other: Any) = other match {
+		case that: DiscreteDistribution => 
+			(that canEqual this) && (that.values equals values)
+		case _ => false
+	}
+	
+	override def hashCode() = values.hashCode	 
+}
+object DiscreteDistribution{
+	def apply(t:Traversable[Int]): DiscreteDistribution = 
+		new DiscreteDistribution(t.groupBy(identity).mapValues(_.size))
 }

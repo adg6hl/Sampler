@@ -14,14 +14,14 @@
 * If not, see <http://www.gnu.org/licenses/>.
 */
 
-package gc.sampler.random
+package gc.sampler.run
 
-import scala.math.random
+import gc.sampler.random.Random
+import gc.sampler.distribution.DiscreteDistribution
+import scala.collection.mutable.MapBuilder
 
-class Random{
-	def nextInt(numItems: Int): Int = {
-		(random * numItems).asInstanceOf[Int]
+class SerialRunner(val random: Random) {
+	def apply(numRuns: Int)(generator: => Int): DiscreteDistribution = {
+		null
 	}
 }
-
-// (scala.Math.random*8).asInstanceOf[Int]
