@@ -1,6 +1,7 @@
 /*
 * Copyright (c): 
-* Oliver Tearne <tearne@gmail.com> 
+* Oliver Tearne <tearne@gmail.com>
+* Ashley Goddard <adg6hl@hotmail.com>
 *
 * This program is free software: you can redistribute it and/or modify it under the terms of
 * the GNU General Public License as published by the Free Software Foundation, either version
@@ -17,11 +18,11 @@
 package gc.sampler.model
 
 import gc.sampler.random._
+import scala.collection.mutable.ListBuffer
 
 class SingleSample(val random: Random) {
 	def nextNumPositives(sampleSize:Int, populationSize:Int, numInfected:Int): Int = {
 		val draws = for(i <- 0 until sampleSize) yield random.nextInt(populationSize-i)
 		(0 /: draws){ (acc,n) => if(n < numInfected-acc) acc+1 else acc }
-		draws.foldLeft(0){ (acc,n) => if(n < numInfected-acc) acc+1 else acc }
 	}
 }

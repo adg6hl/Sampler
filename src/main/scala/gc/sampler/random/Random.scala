@@ -23,3 +23,5 @@ class Random{
 		(random * numItems).asInstanceOf[Int]
 	}
 }
+
+// (scala.Math.random*8).asInstanceOf[Int]
