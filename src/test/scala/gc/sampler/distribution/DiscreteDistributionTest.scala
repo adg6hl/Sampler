@@ -39,6 +39,19 @@ class DiscreteDistributionTest extends JUnitSuite with MockitoSugar{
 		d3 = new DiscreteDistribution(Map(1->once, 2->twice, 3->thrice, 4->once))
 	}
 	
+	@Test def addingDistributions {
+		val dSum: DiscreteDistribution = d2 + d3
+		
+		val resultCounts = dSum.countsMap
+		assert(resultCounts.size === 6)
+		assert(resultCounts(1) === 1)
+		assert(resultCounts(2) === 2)
+		assert(resultCounts(3) === 3)
+		assert(resultCounts(4) === 2)
+		assert(resultCounts(5) === 2)
+		assert(resultCounts(6) === 3)
+	}
+	
 	@Test def distanceUsesInfinityNorm {
 		def expectedDist(dA: DiscreteDistribution, dB: DiscreteDistribution, position: Int) =
 			math.abs(dA(position)-dB(position))
