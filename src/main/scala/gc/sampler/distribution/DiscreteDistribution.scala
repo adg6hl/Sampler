@@ -16,20 +16,38 @@
 
 package gc.sampler.distribution
 
-class DiscreteDistribution(val values: Map[Int,Int]) {
+class DiscreteDistribution(val countsMap: Map[Int,Int]) {
+	val norm = countsMap.values.foldLeft(0)((acc,count) => acc+count) 
+	val densityMap = countsMap.mapValues(count => count.asInstanceOf[Double]/norm)
+	
 	def distanceTo(that: DiscreteDistribution): Double = {
-		0.0
+		val indexes = countsMap.keySet ++ that.countsMap.keySet
+		def distAtIndex(i: Int) = math.abs(this(i)-that(i))
+		indexes.map(distAtIndex(_)).max
 	}
 	
-	def canEqual(other: Any): Boolean = other.isInstanceOf[DiscreteDistribution]
+	def apply(index: Int): Double = {
+		if(densityMap.contains(index)) densityMap(index)
+		else 0
+	}
+	
+	def + (that: DiscreteDistribution): DiscreteDistribution = new DiscreteDistribution(
+		(Map[Int, Int]() /: (for(map <- List(countsMap, that.countsMap); kvp <- map) yield kvp)) {
+			(acc, kvp) => 
+				if(acc.contains(kvp._1)) acc + ((kvp._1, acc(kvp._1)+kvp._2))
+				else acc + kvp
+		}
+	)
+	
+	def canEqual(other: Any): Boolean = other.isInstanceOf[DiscreteDistribution]	
 	
 	override def equals(other: Any) = other match {
 		case that: DiscreteDistribution => 
-			(that canEqual this) && (that.values equals values)
+			(that canEqual this) && (that.countsMap equals countsMap)
 		case _ => false
 	}
 	
-	override def hashCode() = values.hashCode	 
+	override def hashCode() = countsMap.hashCode	 
 }
 object DiscreteDistribution{
 	def apply(t:Traversable[Int]): DiscreteDistribution = 
