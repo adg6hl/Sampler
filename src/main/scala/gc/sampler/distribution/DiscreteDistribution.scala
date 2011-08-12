@@ -1,6 +1,7 @@
 /*
 * Copyright (c): 
 * Oliver Tearne <tearne@gmail.com> 
+* Ashley Goddard <adg6hl@hotmail.com>
 *
 * This program is free software: you can redistribute it and/or modify it under the terms of
 * the GNU General Public License as published by the Free Software Foundation, either version
@@ -17,7 +18,7 @@
 package gc.sampler.distribution
 
 class DiscreteDistribution(val countsMap: Map[Int,Int]) {
-	val norm = countsMap.values.foldLeft(0)((acc,count) => acc+count) 
+	val norm = countsMap.values.sum
 	val densityMap = countsMap.mapValues(count => count.asInstanceOf[Double]/norm)
 	
 	def distanceTo(that: DiscreteDistribution): Double = {
